@@ -1,144 +1,93 @@
+import 'fake_data.dart';
+
 void main() {
-  dynamic anyThing = "20";
+  List<String> name = ['ahmad', 'mhd', 'abd'];
 
-  print(anyThing);
-  print(anyThing.runtimeType);
+  print(name.length);
 
-  anyThing = 50;
-
-  print(anyThing);
-  print(anyThing.runtimeType);
-
-  int index = 20;
-
-  index = 30;
-
-  print(index);
-  print(index.runtimeType);
-
-  double sales = 0.5;
-
-  print(sales);
-  print(sales.runtimeType);
-
-  // sales = number;
-  index = sales.toInt();
-
-  num? number = 5;
-
-  print(number / 0);
-
-  print("the number $number is int");
-  print(number.runtimeType);
-
-  number = 0.2;
-
-  print("what is the number dataType $number");
-  print("${number.runtimeType}");
-
-  String? name;
-
-  name = '';
-
-  print(name!.length);
-  print(name.runtimeType);
-
-  //! if we don't give the var value it take dynamic
-  var temp;
-  temp = 'temp data';
-  //? String temp = "temp data";
-
-  temp = 20;
-
-  print(temp);
-  print(temp.runtimeType);
-
-  const int phoneNumber = 099999999;
-
-  // phoneNumber = 10;
-
-  print(phoneNumber);
-  print(phoneNumber.runtimeType);
-
-  final String lastName;
-
-  //! final is like the const antil give it a value
-  lastName = "kazeha";
-  // lastName = "orfaly";
-
-  print(lastName);
-  print(lastName.runtimeType);
-
-  final birthDate;
-
-  birthDate = "2004-01-30";
-
-  print(birthDate);
-
-  int priceIPhone = 3000;
-  int priceSamsung = 2700;
-  int priceXiaomi = 2000;
-  int myMaony = 2700;
-
-  //* < > <= >= == !=
-  //* && || ??
-  if (myMaony >= priceXiaomi) {
-    print("you can pay priceXiaomi");
-  }
-  if (myMaony >= priceSamsung) {
-    print("you can pay priceSamsung");
-  }
-  if (myMaony >= priceIPhone) {
-    print("you can pay Iphone");
+  try {
+    print(name[3]);
+  } catch (e) {
+    print(e);
   }
 
-  bool? isFav;
+  print(name.last);
+  List<String> newName = ['mosab', 'zied'];
+  print(name);
+  name.addAll(newName);
+  print(name);
+  name.add('hamed');
+  print(name);
+  name.remove('mosab');
+  print("list name after the remove $name");
+  // name.clear();
+  // print("list name after the clear $name");
+  print(name.removeAt(0));
+  print(name);
+  print(name.isNotEmpty);
+  print('----------');
+  print(name.elementAt(2));
+  print(name[2]);
 
-  //! isFav ?? true
-  //* how it work
-  //! if (isFav is Null) {
-  //!   isFav = true;
-  //!  }
+  List<int> index = [1, 4, 5, -1];
+  int result = 1;
 
-  print(isFav ?? true);
-
-  wichPhoneCanIHave(5000, 'Iphone', "samsung", 8000, 5000);
-  wichPhoneCanIHave(10000, '17 pro', "S 26 ", 14000, 19999);
-  wichCarCanIHave(
-    myMany: 10000,
-    firstCarName: "kia",
-    secondCarName: "tesal",
-    firstCar: 5000,
-    secondCar: 100000,
-  );
-}
-
-void wichPhoneCanIHave(
-  int myMany,
-  String firstPhoneName,
-  String secondPhoneName,
-  int firstPhone,
-  int secondPhone,
-) {
-  if (myMany >= firstPhone) {
-    print("you can pay $firstPhoneName");
+  index.forEach((value) {
+    result = result * value;
+  });
+  if (result >= 0) {
+    print(1);
+  } else {
+    print(-1);
   }
-  if (myMany >= secondPhone) {
-    print("you can pay $secondPhoneName");
-  }
-}
+  print(result);
 
-void wichCarCanIHave({
-  required int myMany,
-  required String firstCarName,
-  required String secondCarName,
-  required int firstCar,
-  int? secondCar,
-}) {
-  if (myMany >= firstCar) {
-    print("you can pay $firstCarName");
-  }
-  if (myMany >= secondCar!) {
-    print("you can pay $secondCarName");
-  }
+  Map<String, dynamic> user = {
+    "id": 1,
+    "name": "ahmad",
+    "number": 09666666,
+    "address": "mazie",
+  };
+  print(user.isEmpty);
+  print(user.isNotEmpty);
+  print(user);
+  print(user.keys);
+  print(user.values);
+  print(user.values.elementAt(2));
+  print(user.values.contains('ahmad'));
+  print(name.contains('zied'));
+
+  Map<String, dynamic> nestedMap = {
+    'names': ['ahmad', "mhd", "abd", "mustafa"],
+    "index": 0,
+    'users_data': {
+      "user": [
+        {"name": "mhd", "job": "eng"},
+        {"name": "ahmad", "job": "docotr"},
+      ],
+    },
+  };
+  print(nestedMap.values.elementAt(1));
+  print(nestedMap.values.elementAt(0)[2]);
+  print(nestedMap.values.elementAt(2).values.elementAt(0)[0].keys.elementAt(1));
+
+  List nestedList = [
+    "data",
+    [0, 1, 2, 3, 4, 5],
+    {
+      "name": "ahmad",
+      "lastName": "kosa",
+      "data_conect": [
+        'fasbook',
+        "whatsApp",
+        "phone_number",
+        {
+          "github_reposetriy": ["ferst", 'second'],
+        },
+      ],
+    },
+  ];
+  print(nestedList[1].elementAt(5));
+  print(nestedList[2].values.elementAt(2)[3].values.elementAt(0)[1]);
+  print(fakeData.values.elementAt(16)[0].values.elementAt(2));
 }
