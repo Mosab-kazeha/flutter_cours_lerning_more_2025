@@ -1,93 +1,153 @@
-import 'fake_data.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+Future<void> wait() async {
+  await Future.delayed(Duration(seconds: 2));
+  print("finish waiting");
+}
 
-void main() {
-  List<String> name = ['ahmad', 'mhd', 'abd'];
+class Humen {
+  String name;
+  String? address;
+  int number;
+  Humen(this.number, {required this.name, this.address});
 
-  print(name.length);
+  void work() {
+    print("the humen did not do anything");
+  }
+}
 
-  try {
-    print(name[3]);
-  } catch (e) {
-    print(e);
+class Docotr extends Humen {
+  int? id;
+  Docotr(super.number, {required super.name, super.address, this.id});
+
+  @override
+  void work() {
+    print("i am a docotor");
   }
 
-  print(name.last);
-  List<String> newName = ['mosab', 'zied'];
-  print(name);
-  name.addAll(newName);
-  print(name);
-  name.add('hamed');
-  print(name);
-  name.remove('mosab');
-  print("list name after the remove $name");
-  // name.clear();
-  // print("list name after the clear $name");
-  print(name.removeAt(0));
-  print(name);
-  print(name.isNotEmpty);
-  print('----------');
-  print(name.elementAt(2));
-  print(name[2]);
-
-  List<int> index = [1, 4, 5, -1];
-  int result = 1;
-
-  index.forEach((value) {
-    result = result * value;
-  });
-  if (result >= 0) {
-    print(1);
-  } else {
-    print(-1);
+  void spishalWork() {
+    print("i am a dentest");
   }
-  print(result);
+}
 
-  Map<String, dynamic> user = {
-    "id": 1,
-    "name": "ahmad",
-    "number": 09666666,
-    "address": "mazie",
-  };
-  print(user.isEmpty);
-  print(user.isNotEmpty);
-  print(user);
-  print(user.keys);
-  print(user.values);
-  print(user.values.elementAt(2));
-  print(user.values.contains('ahmad'));
-  print(name.contains('zied'));
+class Dentest extends Docotr {
+  Dentest(super.number, {required super.name, super.address});
 
-  Map<String, dynamic> nestedMap = {
-    'names': ['ahmad', "mhd", "abd", "mustafa"],
-    "index": 0,
-    'users_data': {
-      "user": [
-        {"name": "mhd", "job": "eng"},
-        {"name": "ahmad", "job": "docotr"},
-      ],
-    },
-  };
-  print(nestedMap.values.elementAt(1));
-  print(nestedMap.values.elementAt(0)[2]);
-  print(nestedMap.values.elementAt(2).values.elementAt(0)[0].keys.elementAt(1));
+  void spishalWork() {
+    print('i do not have to work i am rish');
+  }
+}
 
-  List nestedList = [
-    "data",
-    [0, 1, 2, 3, 4, 5],
-    {
-      "name": "ahmad",
-      "lastName": "kosa",
-      "data_conect": [
-        'fasbook',
-        "whatsApp",
-        "phone_number",
-        {
-          "github_reposetriy": ["ferst", 'second'],
-        },
-      ],
-    },
-  ];
-  print(nestedList[1].elementAt(5));
-  print(nestedList[2].values.elementAt(2)[3].values.elementAt(0)[1]);
-  print(fakeData.values.elementAt(16)[0].values.elementAt(2));
+class Worker extends Humen implements Dentest {
+  int? id;
+  Worker(super.number, {required super.name, super.address, this.id});
+
+  void spishalWork() {
+    print('THIS IS WORKER');
+  }
+}
+
+class Animel {
+  String name;
+  Animel({required this.name});
+}
+
+class Dog extends Animel {
+  Dog({required super.name});
+}
+
+void main() async {
+  wait();
+  Humen mhd = Humen(0944444, name: "mhd");
+  Docotr ahmad = Docotr(0988888, name: "ahmd");
+  Dentest amar = Dentest(0988888, name: "ahmd");
+
+  Humen mosab = Docotr(095555555, name: "mosab", id: 5);
+  // Docotr zied = Humen();
+  // Dog spark = Animel(name: "");
+
+  mosab.work();
+  // print(mosab.id);
+  // mosab.spishalWork();
+
+  print(mhd.address);
+  mhd.work();
+  ahmad.work();
+  amar.work();
+  amar.spishalWork();
+
+  // int second_result = 5;
+  // // second_result = 0.5;
+  // int? first_result;
+  // first_result = 4;
+
+  // const int number = 6;
+  // final String name;
+  // name = "ahmad";
+
+  // print(number.runtimeType);
+
+  // num salary = 1000;
+  // salary = 0.5;
+
+  // print(salary.runtimeType);
+
+  // var temp = "var data";
+  // print("the tybe ${temp.runtimeType}");
+  // temp = "it must to be string";
+  // print("the tybe ${temp}");
+
+  // var address;
+  // address = "mazie";
+  // print(" address is ${address.runtimeType}");
+  // address = 5;
+  // print(" address is ${address.runtimeType}");
+
+  // dynamic tempData;
+  // print(tempData.runtimeType);
+  // //
+  // print(name);
+  // print(first_result ?? 5 + second_result);
+
+  // // if(){}
+  // first_result == second_result ? print(true) : print(false);
+  // var temprery;
+
+  // //! || && ??
+  // if (temprery == Null) {
+  //   print("");
+  // }
+  // print(temprery ?? "");
+
+  // List<int> numbers = [5, 7, 10, -1];
+
+  // int numbers_result = 1;
+  // // numbers.contains(0);
+  // numbers.forEach((element) {
+  //   element == 0 ? print(0) : numbers_result = numbers_result * element;
+  // });
+
+  // if (numbers_result > 0) {
+  //   print(1);
+  // } else if (numbers_result < 0) {
+  //   print(-1);
+  // }
+  // List phoneNumber = [
+  //   09555,
+  //   445036,
+  //   {'user': "mhd"},
+  // ];
+  // // numbers.addAll(phoneNumber);
+  // numbers.clear();
+  // print("${phoneNumber[2]["user"]}");
+
+  // Map<String, dynamic> user = {
+  //   "user_name": "mhd",
+  //   "user_number": 096666666,
+  //   "user_address": ["mazie", "paramke"],
+  //   "is_the_user_work": false,
+  // };
+
+  // print(user['user_address'][1]);
+  // print(user.values.elementAt(0));
+  // print(user.keys.elementAt(0));
 }
