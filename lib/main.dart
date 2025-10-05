@@ -1,55 +1,42 @@
-import 'dart:io';
-import 'dart:math' as math;
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(CulomnPage());
+  runApp(MyApp());
 }
 
-class CulomnPage extends StatelessWidget {
-  const CulomnPage({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: Column(
+    return MaterialApp(home: ColumnScreen());
+  }
+}
+
+class TestColumn extends StatelessWidget {
+  const TestColumn({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        color: Colors.red,
+        child: Column(
           children: [
-            // Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: Container(width: 200, height: 200, color: Colors.blueGrey),
-            // ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-              child: Container(
-                width: 200,
-                height: 200,
-                color: Colors.blueGrey,
-                padding: EdgeInsets.all(30),
-                margin: EdgeInsets.all(10),
-                child: Text('hello', style: TextStyle(fontSize: 50)),
+            Container(width: 100, height: 100, color: Colors.teal),
+            Container(
+              color: Colors.amberAccent,
+              child: Column(
+                children: [
+                  Container(
+                    width: 50,
+                    height: 50,
+                    color: Colors.blue,
+                    margin: EdgeInsets.all(10),
+                  ),
+                ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(0),
-              child: Container(
-                width: 200,
-                height: 200,
-                color: Colors.amber,
-                child: Text('hello', style: TextStyle(fontSize: 50)),
-                padding: EdgeInsets.all(50),
-                margin: EdgeInsets.all(10),
-              ),
-            ),
-            Padding(padding: const EdgeInsets.all(8.0), child: FlutterLogo()),
-            Padding(padding: const EdgeInsets.all(10), child: Icon(Icons.face)),
-            Padding(
-              padding: const EdgeInsets.all(0),
-              child: Container(width: 200, height: 200, color: Colors.amber),
-            ),
-            // Container(width: 200, height: 200, color: Colors.blueGrey),
           ],
         ),
       ),
@@ -57,100 +44,131 @@ class CulomnPage extends StatelessWidget {
   }
 }
 
-// class ImagePage extends StatelessWidget {
-//   const ImagePage({super.key});
-
-//   @override
-//   Widget build(context) {
-//     return MaterialApp(
-//       home: Scaffold(
-//         body: Center(
-//           // child: Image.network(
-//           //   'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzTojBf4VJCGR4Z-QxG-7GozKDuWjCst6z6Q&s',
-//           // ),
-//           // child: Image.file(
-//           //   File("C:/Users/mosab/Desktop/photo_2025-07-22_07-24-38.jpg"),
-//           // ),
-//           child: Image.asset('assets/image_wesdom.jpeg'),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class ColumnScreen extends StatelessWidget {
+  const ColumnScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          leading: FlutterLogo(),
-          title: Text('title'),
-          // toolbarHeight: 500,
-          actions: [FlutterLogo(), FlutterLogo()],
-        ),
-        backgroundColor: Colors.teal,
-        body: Center(
-          child: Container(
-            width: 200,
-            height: 200,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              // gradient: LinearGradient(
-              //   colors: [Colors.black, Colors.grey, Colors.white],
-              //   begin: Alignment.bottomLeft,
-              //   end: Alignment.topRight,
-              // ),
-              // gradient: RadialGradient(
-              //   radius: 0.5,
-              //   center: Alignment.topCenter,
-              //   colors: [Colors.green, Colors.white, Colors.blueGrey],
-              // ),
-              gradient: SweepGradient(
-                // center: Alignment(0.1, 0.1),
-                // startAngle: 1,
-                endAngle: math.pi * 2,
-                colors: [CupertinoColors.activeBlue, Colors.amber],
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black,
-                  offset: Offset(5, 5),
-                  blurRadius: 10,
-                  spreadRadius: 10,
-                  blurStyle: BlurStyle.inner,
-                ),
-                BoxShadow(
-                  color: Colors.white,
-                  offset: Offset(-5, -5),
-                  blurRadius: 10,
-                  blurStyle: BlurStyle.inner,
-                ),
-              ],
-              color: Colors.white,
-              // shape: BoxShape.circle,
-              // borderRadius: BorderRadius.only(
-              //   topLeft: Radius.circular(10),
-              //   bottomRight: Radius.circular(20),
-              //   topRight: Radius.circular(20),
-              // ),
-              border: Border.all(
-                color: Colors.red.shade900,
-                width: 5,
-                strokeAlign: BorderSide.strokeAlignInside,
-                // style: BorderStyle.none,
-              ),
-              image: DecorationImage(
-                image: AssetImage('assets/image.jpg'),
-                opacity: 0.9,
+    return Scaffold(
+      body: Container(
+        color: Colors.teal,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          // mainAxisSize: MainAxisSize.min,
+          children: [
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Icon(
+                Icons.backspace_sharp,
+                size: 50,
+                color: Colors.white,
+                shadows: [Shadow()],
               ),
             ),
-            // child: FlutterLogo(size: 66),
-            // child: Image.asset("assets/image_wesdom.jpeg", fit: BoxFit.cover),
-          ),
+            Container(width: 200, height: 100, color: Colors.amber),
+
+            Container(width: 300, height: 100, color: Colors.amber),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Container(width: 50, height: 100, color: Colors.amber),
+            ),
+            Row(
+              // spacing: 10,
+              mainAxisAlignment: MainAxisAlignment.center,
+              // crossAxisAlignment: CrossAxisAlignment.,
+              children: [
+                Container(
+                  width: 13,
+                  height: 13,
+                  // margin: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.red,
+                  ),
+                ),
+                // SizedBox(width: 10),
+                Container(
+                  width: 13,
+                  height: 13,
+                  margin: EdgeInsets.symmetric(horizontal: 10),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.red,
+                  ),
+                ),
+                // SizedBox(width: 10),
+                Container(
+                  width: 13,
+                  height: 13,
+                  // margin: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.red,
+                  ),
+                ),
+              ],
+            ),
+            Container(width: 100, height: 100, color: Colors.amber),
+          ],
         ),
+      ),
+    );
+  }
+}
+
+class SplashScreen extends StatelessWidget {
+  const SplashScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 32,
+              left: 115,
+              right: 115,
+              bottom: 64,
+            ),
+            child: Text("hello Word"),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 21, left: 21, bottom: 36),
+            child: Container(
+              width: 200,
+              height: 100,
+              color: Color.fromRGBO(166, 166, 166, 1),
+            ),
+          ),
+          Text(
+            "Access Anywhere",
+            style: TextStyle(
+              fontSize: 28,
+              fontWeight: FontWeight.w700,
+              color: Color.fromRGBO(38, 38, 38, 1),
+            ),
+          ),
+          SizedBox(height: 8),
+          Text(
+            "The video call feature can be\n accessed from anywhere in your\n house to help you.",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 17,
+              fontWeight: FontWeight.w400,
+              color: Color.fromRGBO(166, 166, 166, 1),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 104, right: 84, left: 84),
+            child: Container(
+              width: 200,
+              height: 100,
+              color: Color.fromRGBO(166, 166, 166, 1),
+            ),
+          ),
+        ],
       ),
     );
   }
