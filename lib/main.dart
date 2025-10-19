@@ -4,16 +4,19 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(home: HomePage());
-  }
+  State<MyApp> createState() => _MyAppState();
 }
 
-String textFileValue = '';
+class _MyAppState extends State<MyApp> {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(home: HomePage(), debugShowCheckedModeBanner: false);
+  }
+}
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -23,96 +26,93 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late TextEditingController controller;
-  double contnerWight = 0;
-  double contnerHight = 0;
-
-  @override
-  void initState() {
-    controller = TextEditingController();
-
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
-  bool? isChecked = false;
+  int pageIndex = 1;
+  List<Widget> page = [
+    Center(
+      child: Tooltip(
+        onTriggered: () {
+          print("0");
+        },
+        message: "flutter",
+        enableFeedback: true,
+        child: FlutterLogo(size: 500),
+      ),
+    ),
+    Center(child: FlutterLogo(size: 300)),
+    Center(child: FlutterLogo(size: 100)),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+      appBar: AppBar(),
+      body: page[pageIndex],
+      drawer: Drawer(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("the value of text file is => ${controller.text}"),
-            SizedBox(
-              width: 250,
-              child: TextField(
-                controller: controller,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  border: UnderlineInputBorder(
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  // suffix: Icon(Icons.person),
-                  suffixIcon: Icon(Icons.abc),
-                  // prefix: Icon(Icons.phone),
-                  prefixIcon: Icon(Icons.phone),
-                  helper: Text("hello"),
-                  // hintText: "phone number",
-                  hintStyle: TextStyle(fontSize: 20),
-                  label: Text("data"),
-                ),
-                onChanged: (String value) {
-                  print(controller.text);
-                  setState(() {});
-                  contnerHight = contnerHight + 10;
-                  contnerWight = contnerWight + 10;
-                  textFileValue = value;
-                },
-              ),
-            ),
-
-            InkWell(
-              // onTap: () {
-              //   contnerHight = 100;
-              //   contnerWight = 400;
-              //   setState(() {});
-              // },
-              // child: Checkbox(
-              //   value: isChecked,
-              //   checkColor: Colors.teal,
-              //   // focusColor: Colors.amber,
-              //   activeColor: Colors.black,
-              //   shape: CircleBorder(side: BorderSide.none, eccentricity: 0.9),
-              //   // splashRadius: 1000,
-
-              //   // materialTapTargetSize: ,
-
-              //   // overlayColor: WidgetStateColor.transparent,
-              //   onChanged: (isCelacted) {
-              //     setState(() {});
-              //     isChecked = isCelacted;
-              //     print(isChecked);
-              //   },
+            // DrawerHeader(
+            //   child: Column(
+            //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //     children: [
+            //       Row(
+            //         children: [
+            //           CircleAvatar(child: Icon(Icons.person)),
+            //           Text("name"),
+            //         ],
+            //       ),
+            //       Row(
+            //         children: [
+            //           CircleAvatar(child: Icon(Icons.phone)),
+            //           Text("+963"),
+            //         ],
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            UserAccountsDrawerHeader(
+              // decoration: BoxDecoration(
+              //   image: DecorationImage(image:
+              //   )
               // ),
-              child: Switch(
-                value: isChecked!,
-                activeColor: Colors.teal,
-                // focusColor: Colors.amber,
-                inactiveTrackColor: Colors.amber,
-                onChanged: (value) {
-                  isChecked = value;
-                  setState(() {});
-                },
+              accountName: Row(
+                children: [
+                  CircleAvatar(child: Icon(Icons.person)),
+                  Text("name"),
+                ],
+              ),
+              accountEmail: Row(
+                children: [
+                  CircleAvatar(child: Icon(Icons.phone)),
+                  Text("+963"),
+                ],
               ),
             ),
+
+            Text("setting"),
+            Text("setting"),
+            Text("setting"),
+            Text("setting"),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        
+        currentIndex: pageIndex,
+        onTap: (value) {
+          print(value);
+          setState(() {});
+          pageIndex = value;
+        },
+        selectedLabelStyle: TextStyle(fontSize: 50),
+        items: [
+          BottomNavigationBarItem(
+            
+            icon: Icon(Icons.person),
+            label: "profile",
+            tooltip: 'profile',
+          ),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: "Setting"),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "home"),
+        ],
       ),
     );
   }
