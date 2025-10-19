@@ -1,118 +1,68 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:intro_to_statefull/model/prodact.dart';
 
 void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: HomePage(), debugShowCheckedModeBanner: false);
+    return MaterialApp(home: ProdactPageWithModel());
   }
 }
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+Dio dio = Dio();
+late Response temp;
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
+class ProdactPageWithOutModel extends StatelessWidget {
+  const ProdactPageWithOutModel({super.key});
 
-class _HomePageState extends State<HomePage> {
-  int pageIndex = 1;
-  List<Widget> page = [
-    Center(
-      child: Tooltip(
-        onTriggered: () {
-          print("0");
-        },
-        message: "flutter",
-        enableFeedback: true,
-        child: FlutterLogo(size: 500),
-      ),
-    ),
-    Center(child: FlutterLogo(size: 300)),
-    Center(child: FlutterLogo(size: 100)),
-  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: page[pageIndex],
-      drawer: Drawer(
-        child: Column(
-          children: [
-            // DrawerHeader(
-            //   child: Column(
-            //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            //     children: [
-            //       Row(
-            //         children: [
-            //           CircleAvatar(child: Icon(Icons.person)),
-            //           Text("name"),
-            //         ],
-            //       ),
-            //       Row(
-            //         children: [
-            //           CircleAvatar(child: Icon(Icons.phone)),
-            //           Text("+963"),
-            //         ],
-            //       ),
-            //     ],
-            //   ),
-            // ),
-            UserAccountsDrawerHeader(
-              // decoration: BoxDecoration(
-              //   image: DecorationImage(image:
-              //   )
-              // ),
-              accountName: Row(
-                children: [
-                  CircleAvatar(child: Icon(Icons.person)),
-                  Text("name"),
-                ],
-              ),
-              accountEmail: Row(
-                children: [
-                  CircleAvatar(child: Icon(Icons.phone)),
-                  Text("+963"),
-                ],
-              ),
-            ),
-
-            Text("setting"),
-            Text("setting"),
-            Text("setting"),
-            Text("setting"),
-          ],
+      body: Center(
+        child: InkWell(
+          onTap: () async {
+            temp = await dio.delete("https://dummyjson.com/products/1");
+            print(temp.data);
+          },
+          child: Text('temp.statusMessage.toString()'),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        
-        currentIndex: pageIndex,
-        onTap: (value) {
-          print(value);
-          setState(() {});
-          pageIndex = value;
-        },
-        selectedLabelStyle: TextStyle(fontSize: 50),
-        items: [
-          BottomNavigationBarItem(
-            
-            icon: Icon(Icons.person),
-            label: "profile",
-            tooltip: 'profile',
-          ),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: "Setting"),
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "home"),
-        ],
+    );
+  }
+}
+
+class ProdactPageWithModel extends StatefulWidget {
+  const ProdactPageWithModel({super.key});
+
+  @override
+  State<ProdactPageWithModel> createState() => _ProdactPageWithModelState();
+}
+
+class _ProdactPageWithModelState extends State<ProdactPageWithModel> {
+  late ProdactModel? prodact = ProdactModel(
+    id: 0,
+    title: 'get the data',
+    category: 'category',
+  );
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: InkWell(
+          onTap: () async {
+            temp = await dio.get("https://dummyjson.com/products/1");
+            prodact = ProdactModel.formMap(temp.data);
+            setState(() {});
+            print(temp.data);
+          },
+          child: Text(prodact!.title.isEmpty ? "get data" : prodact!.title),
+        ),
       ),
     );
   }
