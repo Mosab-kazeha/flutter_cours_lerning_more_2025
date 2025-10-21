@@ -1,6 +1,6 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:intro_to_statefull/model/prodact.dart';
+import 'package:intro_to_statefull/model/task_model.dart';
+import 'package:intro_to_statefull/service/task_service.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,15 +11,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: ProdactPageWithModel());
+    return MaterialApp(home: TaskPageWithFutuerBuilderToGetAllTask());
   }
 }
 
-Dio dio = Dio();
-late Response temp;
+class TaskPageWithOutFutuerBuilder extends StatefulWidget {
+  const TaskPageWithOutFutuerBuilder({super.key});
 
-class ProdactPageWithOutModel extends StatelessWidget {
-  const ProdactPageWithOutModel({super.key});
+  @override
+  State<TaskPageWithOutFutuerBuilder> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<TaskPageWithOutFutuerBuilder> {
+  TaskModel? tempData;
 
   @override
   Widget build(BuildContext context) {
@@ -27,42 +31,164 @@ class ProdactPageWithOutModel extends StatelessWidget {
       body: Center(
         child: InkWell(
           onTap: () async {
-            temp = await dio.delete("https://dummyjson.com/products/1");
-            print(temp.data);
+            tempData = await TaskService().getOneTask();
+            // print(tempData);
+            setState(() {});
           },
-          child: Text('temp.statusMessage.toString()'),
+          child: Text(
+            tempData == null ? "there is no data yet" : tempData!.title,
+          ),
         ),
       ),
     );
   }
 }
 
-class ProdactPageWithModel extends StatefulWidget {
-  const ProdactPageWithModel({super.key});
+class TaskPageWithFutuerBuilderToGetOneTask extends StatelessWidget {
+  const TaskPageWithFutuerBuilderToGetOneTask({super.key});
 
-  @override
-  State<ProdactPageWithModel> createState() => _ProdactPageWithModelState();
-}
-
-class _ProdactPageWithModelState extends State<ProdactPageWithModel> {
-  late ProdactModel? prodact = ProdactModel(
-    id: 0,
-    title: 'get the data',
-    category: 'category',
-  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: InkWell(
-          onTap: () async {
-            temp = await dio.get("https://dummyjson.com/products/1");
-            prodact = ProdactModel.formMap(temp.data);
-            setState(() {});
-            print(temp.data);
-          },
-          child: Text(prodact!.title.isEmpty ? "get data" : prodact!.title),
-        ),
+      body: FutureBuilder(
+        future: TaskService().getOneTask(),
+        builder: (context, snapshot) {
+          print(snapshot);
+          print(000000000000000);
+          if (snapshot.hasData) {
+            TaskModel task = ((snapshot.data) as TaskModel);
+            return Center(
+              child: ListTile(
+                leading: CircleAvatar(child: Text(task.id)),
+                title: Text(task.title),
+                subtitle: Text(task.name),
+                trailing: Text(task.time_to_done.toString()),
+              ),
+            );
+          } else if (snapshot.hasError) {
+            return Center(child: Text("${snapshot.error}"));
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        },
+      ),
+    );
+  }
+}
+
+class TaskPageWithFutuerBuilderToGetAllTask extends StatelessWidget {
+  TaskPageWithFutuerBuilderToGetAllTask({super.key});
+  TextEditingController controller = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          showModalBottomSheet(
+            isDismissible: false,
+            context: context,
+            builder: (context) {
+              return SizedBox(
+                width: double.infinity,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    SizedBox(
+                      width: 300,
+                      height: 50,
+                      child: TextField(
+                        controller: controller,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () async {
+                        bool isCreated = await TaskService().crateTask(
+                          TaskModel(
+                            title: "flutter",
+                            name: controller.text,
+                            time_to_done: 5,
+                            id: "0",
+                          ),
+                        );
+
+                        if (isCreated) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('the task created successfuly'),
+                              backgroundColor: Colors.green,
+                            ),
+                          );
+                        }
+                        if (!isCreated) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('field with create the task'),
+                              backgroundColor: Colors.red,
+                            ),
+                          );
+                        }
+                        controller.text.isNotEmpty
+                            ? Navigator.pop(context)
+                            : print("object");
+                      },
+                      child: Container(
+                        width: 300,
+                        height: 50,
+                        color: Colors.teal,
+                        child: Center(child: Text("Create task")),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        },
+      ),
+      body: FutureBuilder(
+        future: TaskService().getAllTask(),
+        builder: (context, snapshot) {
+          // print(snapshot);
+          if (snapshot.hasData) {
+            List<TaskModel> task = ((snapshot.data) as List<TaskModel>);
+            if (task.isEmpty) {
+              return Center(child: Text("there is no data "));
+            }
+            return ListView.builder(
+              itemCount: task.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  onLongPress: () {
+                    TaskService().deletTheTask(id: task[index].id);
+                  },
+                  onTap: () {
+                    TaskService().changeTheTask(
+                      newTask: TaskModel(
+                        title: 'title',
+                        name: 'name',
+                        time_to_done: 5,
+                        id: 'id',
+                      ),
+                      id: task[index].id,
+                    );
+                  },
+                  leading: CircleAvatar(child: Text(task[index].id)),
+                  title: Text(task[index].title),
+                  subtitle: Text(task[index].name),
+                  trailing: Text(task[index].time_to_done.toString()),
+                );
+              },
+            );
+          } else if (snapshot.hasError) {
+            return Center(child: Text("${snapshot.error}"));
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        },
       ),
     );
   }
