@@ -14,8 +14,9 @@ class ConterBloc extends Bloc<ConterEvent, ConterState> {
       emit(ChangeConter());
     });
     on<PutNumberByTextField>((event, emit) {
-      if (event.newNumber.isNotEmpty || int.tryParse(event.newNumber) != null) {
+      if (event.newNumber.isNotEmpty && int.tryParse(event.newNumber) != null) {
         conter = int.parse(event.newNumber);
+
         emit(ChangeConter());
       } else {
         conter = 0;
