@@ -2,8 +2,8 @@
 
 import 'dart:developer';
 
-import 'package:bloc_secion/Auth/model/base_model.dart';
-import 'package:bloc_secion/Auth/model/user_model.dart';
+import 'package:bloc_secion/features/Auth/model/base_model.dart';
+import 'package:bloc_secion/features/Auth/model/user_model.dart';
 import 'package:dio/dio.dart';
 
 class LoginService {

@@ -1,13 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:bloc_secion/config/di.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:bloc_secion/Auth/bloc/login_bloc.dart';
-import 'package:bloc_secion/Auth/model/user_model.dart';
+import 'package:bloc_secion/features/Auth/model/user_model.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+import '../bloc/auth_bloc.dart';
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -88,12 +87,49 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
-class UserScreen extends StatelessWidget {
+class UserScreen extends StatefulWidget {
   final String userToken;
-  const UserScreen({super.key, required this.userToken});
+
+  UserScreen({super.key, required this.userToken});
 
   @override
+  State<UserScreen> createState() => _UserScreenState();
+}
+
+class _UserScreenState extends State<UserScreen> {
+  TextEditingController dataToSave = TextEditingController();
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: Text(userToken)));
+    return Scaffold(
+      body: Center(
+        child: Column(
+          children: [
+            Text(
+              prefs.getString("data_from_text_field") ??
+                  "there is no saved data yet",
+              style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
+            ),
+            Checkbox(
+              value: prefs.getBool("isCheck"),
+              onChanged: (value) {
+                prefs.setBool("isCheck", value!);
+                setState(() {});
+              },
+            ),
+            TextField(
+              controller: dataToSave,
+              decoration: InputDecoration(border: OutlineInputBorder()),
+            ),
+            TextButton(
+              onPressed: () async {
+                await prefs.setString("data_from_text_field", dataToSave.text);
+                setState(() {});
+              },
+              child: Text('clike to save'),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
