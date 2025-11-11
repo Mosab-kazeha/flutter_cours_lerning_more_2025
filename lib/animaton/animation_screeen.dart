@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 class ImplicitAnimationScreen extends StatefulWidget {
@@ -27,7 +29,6 @@ class _ImplicitAnimationScreenState extends State<ImplicitAnimationScreen> {
                 opacity = 0.5;
               },
               child: AnimatedOpacity(
-                
                 opacity: opacity,
                 duration: Duration(seconds: 3),
                 child: AnimatedContainer(
@@ -97,7 +98,7 @@ class _ExplicitAinmationScreenState extends State<ExplicitAinmationScreen>
   void initState() {
     controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 5),
+      duration: Duration(seconds: 1),
     );
 
     iconSize = Tween<double>(begin: 50, end: 100).animate(controller);
@@ -132,15 +133,15 @@ class _ExplicitAinmationScreenState extends State<ExplicitAinmationScreen>
     ]).animate(controller);
 
     controller.addStatusListener((status) {
-      print(status);
+      // print(status);
+      // if (status == AnimationStatus.forward) {
+      //   controller.reverse();
+      // }
+      // if (status == AnimationStatus.reverse) {
+      //   controller.forward();
+      // }
     });
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
   }
 
   @override
@@ -151,9 +152,11 @@ class _ExplicitAinmationScreenState extends State<ExplicitAinmationScreen>
           animation: controller,
           builder: (context, child) => InkWell(
             onTap: () {
-              controller.isCompleted == true
-                  ? controller.reverse()
-                  : controller.forward();
+              // controller.isCompleted == true
+              //     ? controller.reverse()
+              //     : controller.forward();
+
+              controller.repeat();
             },
             child: Icon(
               Icons.favorite,
