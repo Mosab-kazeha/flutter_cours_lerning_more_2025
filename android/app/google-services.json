@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "815567863754",
+    "project_id": "learning-and-more",
+    "storage_bucket": "learning-and-more.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:815567863754:android:917558597f05dd85ae1933",
+        "android_client_info": {
+          "package_name": "com.example.saas_in_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIhT9iLOEFa8ot0wEhaMmMjQLbnv1jKV8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
