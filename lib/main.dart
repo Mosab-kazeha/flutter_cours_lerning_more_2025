@@ -25,7 +25,7 @@ await FirebaseMessaging.instance.requestPermission();
 await  Dio().post('https://682b3419d29df7a95be27be0.mockapi.io/quiz',data: {
     "token":await FirebaseMessaging.instance.getToken()
   });
-  
+
   // if (kIsWeb) {
   // runApp(MyApp2());
     
@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
+        // colorScheme: fromSeed(seedColor: Colors.deepPurple),
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -132,7 +132,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
           // action in the IDE, or press "p" in the console), to see the
           // wireframe for each widget.
-          mainAxisAlignment: .center,
+          // mainAxisAlignment: .center,
           children: [
             const Text('You have pushed the button this many times:'),
             Text(
