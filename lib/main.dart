@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -16,16 +17,21 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 }
 
 void main()async {
+  WidgetsFlutterBinding.ensureInitialized();
 await Firebase.initializeApp(options:DefaultFirebaseOptions.currentPlatform );
 await FirebaseMessaging.instance.requestPermission();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   print(await FirebaseMessaging.instance.getToken());
-  if (kIsWeb) {
-  runApp(MyApp2());
+await  Dio().post('https://682b3419d29df7a95be27be0.mockapi.io/quiz',data: {
+    "token":await FirebaseMessaging.instance.getToken()
+  });
+  
+  // if (kIsWeb) {
+  // runApp(MyApp2());
     
-  } else {
+  // } else {
     runApp(MyApp());
-  }
+  // }
 }
 
 class MyApp extends StatelessWidget {
